@@ -22,12 +22,12 @@ push.setVapidDetails(
 //pull sub out of the db - stored ppl that want to recieve notifications (value of JSON.stringify(push))
 let sub = {
    endpoint:
-      "https://fcm.googleapis.com/fcm/send/dx8UE9hZNKM:APA91bFxfmcwKyL5Vev90cLll4_ZVlUqO6kRyavieKzHsnwX1yeAew122nWX3chhkZVsGsf8IjemogueleuFzoEfuWU7wxPtukWVY7417lAfKIZtv_AemuR-rtSiyaTRfAuXE5OZO0jZ",
+      "https://fcm.googleapis.com/fcm/send/ctSAGLCL7TQ:APA91bFO9exBDWxzSf8tAYecHTR1H5ld15S9UU-ZRLK5j0b5hlTHrUrO0xWhHPwPTaXMy5oH57Pult1TBjI5neOb2CmQHOSsc9u0vhAbT0mOdPxxuF3rhuNaUC1oTcBOIKAdRU5tpCC_",
    expirationTime: null,
    keys: {
       p256dh:
-         "BH6luXQNTv7dOfGyXIzZOAk3AeIJwnr5YJazJtPcBLXxQ8bb085bwn8k5_cqCy76HqFetXlaXrGKQNUrmubeJn0",
-      auth: "dUHNLAmziajgsRIEMM0_6Q"
+         "BKIOjVNkRjWg0RXhtd9W4bd9XfyPGqci2CQXIin1VS9RG-9q38ky-rSAq0biZnhXwP_JFhMXyrHFHaBcd3AW7-g",
+      auth: "DX8b0YeieYdqoMlqae3otQ"
    }
 };
 
