@@ -23,43 +23,38 @@
 //    e.waitUntil(self.registration.showNotification("Hello world!", options));
 // });
 
-self.addEventListener("push", function(e) {
-   console.log("in push fn in sw");
-   var body;
 
-   if (e.data) {
+self.addEventListener('push', function(e) {
+    console.log("in push fn in sw")
+    var body;
+  
+    if (e.data) {
       body = e.data.text();
-   } else {
-      body = "Push message no payload";
-   }
+    } else {
+      body = 'Push message no payload';
+    }
+    
+    console.log("Extracted body : " + body);
 
-   console.log("Extracted body : " + body);
-
-   var options = {
+    var options = {
       body: body,
-      icon: "images/notification-flat.png",
+      icon: 'images/notification-flat.png',
       vibrate: [100, 50, 100],
       data: {
-         dateOfArrival: Date.now(),
-         primaryKey: 1
+        dateOfArrival: Date.now(),
+        primaryKey: 1
       },
       actions: [
-         {
-            action: "explore",
-            title: "Explore this new world",
-            icon: "images/checkmark.png"
-         },
-         {
-            action: "close",
-            title: "I don't want any of this",
-            icon: "images/xmark.png"
-         }
+        {action: 'explore', title: 'Explore this new world',
+          icon: 'images/checkmark.png'},
+        {action: 'close', title: 'I don\'t want any of this',
+          icon: 'images/xmark.png'},
       ]
-   };
-   console.log("after setting options");
+    };
+    console.log("after setting options");
 
-   e.waitUntil(
-      self.registration.showNotification("Push Notification", options)
-   );
-   console.log("sent notification");
-});
+    e.waitUntil(
+      self.registration.showNotification('Push Notification', options)
+    );
+    console.log("sent notification");
+  });
