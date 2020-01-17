@@ -23,38 +23,94 @@
 //    e.waitUntil(self.registration.showNotification("Hello world!", options));
 // });
 
+self.addEventListener("push", function(e) {
+   console.log("in push fn in sw");
+   var body;
 
-self.addEventListener('push', function(e) {
-    console.log("in push fn in sw")
-    var body;
-  
-    if (e.data) {
+   if (e.data) {
       body = e.data.text();
-    } else {
-      body = 'Push message no payload';
-    }
-    
-    console.log("Extracted body : " + body);
+   } else {
+      body = "Push message no payload";
+   }
 
-    var options = {
+   console.log("Extracted body : " + body);
+
+   var options = {
       body: body,
-      icon: 'images/notification-flat.png',
+      icon: "images/notification-flat.png",
       vibrate: [100, 50, 100],
+      // sound: 'office_phone.mp3',
       data: {
-        dateOfArrival: Date.now(),
-        primaryKey: 1
+         dateOfArrival: Date.now(),
+         primaryKey: 1
       },
       actions: [
-        {action: 'explore', title: 'Explore this new world',
-          icon: 'images/checkmark.png'},
-        {action: 'close', title: 'I don\'t want any of this',
-          icon: 'images/xmark.png'},
+         {
+            action: "snooze",
+            title: "Snooze this new world",
+            icon: "./snooze.jpg"
+         },
+         {
+            action: "go-live",
+            title: "Share my location",
+            icon: "./location.jpg"
+         },
+         {
+            action: "ignore",
+            title: "I don't want any of this",
+            icon: "images/xmark.png"
+         }
       ]
-    };
-    console.log("after setting options");
+   };
+   console.log("after setting options");
 
-    e.waitUntil(
-      self.registration.showNotification('Push Notification', options)
-    );
-    console.log("sent notification");
-  });
+   const maxVisibleActions = Notification.maxActions;
+   if (maxVisibleActions < 3) {
+      options.body =
+         `This notification will only display ` +
+         `${maxVisibleActions} actions.`;
+   } else {
+      options.body =
+         `This notification can display up to ` +
+         `${maxVisibleActions} actions.`;
+   }
+
+   e.waitUntil(
+      self.registration.showNotification("Push Notification", options)
+   );
+   //  You still need to make use of event.waitUntil() to keep the service worker running while your code is busy.
+   console.log("sent notification");
+});
+
+self.addEventListener("notificationclick", function(event) {
+   const clickedNotification = event.notification;
+   clickedNotification.close();
+
+   // Do something as the result of the notification click
+   // const promiseChain = doSomething();
+   // event.waitUntil(promiseChain);
+});
+
+self.addEventListener("notificationclick", function(event) {
+   if (!event.action) {
+      // Was a normal notification click
+      console.log("Notification Click.");
+      return;
+   }
+
+   switch (event.action) {
+      case "snooze":
+         console.log("User clicked snooze.");
+         break;
+      case "ignore":
+         console.log("User clicked ignore.");
+         break;
+      case "go-live":
+         console.log("User wants to share location.");
+         break;
+
+      default:
+         console.log(`Unknown action clicked: '${event.action}'`);
+         break;
+   }
+});
